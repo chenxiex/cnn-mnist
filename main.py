@@ -6,6 +6,7 @@ import torch.optim as optim
 from torchvision import datasets, transforms
 from torch.optim.lr_scheduler import StepLR
 import time
+import os
 
 # 定义CNN分类器
 class CNNClassifier(nn.Module):
@@ -85,7 +86,8 @@ def main():
     test_kwargs={'batch_size':args.test_batch_size}
     if torch.cuda.is_available() and args.cuda:
         device=torch.device('cuda')
-        cuda_kwargs={'num_workers':1,'pin_memory':True,'shuffle':True}
+        num_cpus=os.cpu_count()
+        cuda_kwargs={'num_workers':num_cpus,'pin_memory':True,'shuffle':True}
         train_kwargs.update(cuda_kwargs)
         test_kwargs.update(cuda_kwargs)
     else:
