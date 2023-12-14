@@ -41,7 +41,7 @@ class CNNClassifier(nn.Module):
 
 
 # 定义训练函数
-def train(args, model, device, train_loader,optimizer,epoch):
+def train(model, device, train_loader,optimizer):
     model.train()
     for batch_idx,(data,target) in enumerate(train_loader):
         data,target = data.to(device),target.to(device)
@@ -113,7 +113,7 @@ def main():
     #训练
     start=time.time()
     for epoch in range(1,args.epochs+1):
-        train(args,model,device,train_loader,optimizer,epoch)
+        train(model,device,train_loader,optimizer)
         test(model,device,test_loader)
         scheduler.step()
     end=time.time()
